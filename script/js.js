@@ -59,38 +59,3 @@ function changeBoardSize(rows, cols, width) {
     clockCD.reset();
     drawBoard();
 }
-
-
-
-
-// Đồng hồ đếm ngược
-// let clock = document.getElementById("clock");
-
-// let timerInterval;
-// function countDown() {
-//     let minutes = 10;
-//     let seconds = minutes * 60; //Số giây
-//     timerInterval = setInterval(function() {
-//         let secondsLeft = seconds % 60;
-//         let minutesLeft = Math.floor(seconds/60);
-//         clock.innerHTML = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
-//
-//         if (seconds <= 0) {
-//             stopCD();
-//             clock.innerHTML = 'Hết Giờ!';
-//             gameBoard.isOver = true;
-//             alert('Kết quả hoà do hết giờ')
-//         }
-//         else seconds--;
-//     }, 1000);
-// }
-
-// function stopCD() {
-//     clearInterval(timerInterval);
-//     timerInterval = null;
-// }
-
-// function resetCD() {
-//     stopCD();
-//     clock.innerHTML = 'PLAY!';
-// }
