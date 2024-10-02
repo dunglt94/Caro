@@ -4,9 +4,11 @@ class Countdown {
         this.seconds = minutes * 60; // Số giây
         this.timerInterval = null;
         this.displayElement = displayElement;
+        this.isRunning = false;
     }
 
     start() {
+        this.isRunning = true;
         if (this.timerInterval) return;
         this.timerInterval = setInterval(() => {
             const minutesLeft = Math.floor(this.seconds / 60);
@@ -17,8 +19,8 @@ class Countdown {
             if (this.seconds <= 0) {
                 this.stop();
                 this.displayElement.innerHTML = 'Hết Giờ!';
-                gameBoard.isOver = true;
-                this.timeout("Kết quả hoà do hết giờ");
+                caroBoard.isOver = true;
+                this.timeout("Hoà");
             } else {
                 this.seconds--;
             }
@@ -28,26 +30,19 @@ class Countdown {
     reset() {
         this.stop();
         this.seconds = this.minutes * 60;
-        this.displayElement.innerHTML = 'PLAY!';
+        this.displayElement.innerHTML = '00:00';
     }
 
     stop() {
         clearInterval(this.timerInterval);
         this.timerInterval = null;
+        this.isRunning = false;
     }
 
-    // Hiển thị thông báo hết giờ vào 1 element
-    // timeout(message) {
-    //     if (this.seconds <=0) {
-    //         this.stop();
-    //         let messageDisplay = document.getElementById('messageDisplay');
-    //         messageDisplay.innerHTML = message;
-    //     }
-    // }
-
-    // Hiển thị thông báo hết giờ bằng alert
+    // Hiển thị thông báo hết giờ vào một element
     timeout(message) {
-            alert(message);
+        let result = document.getElementById("turn");
+        result.innerHTML = message;
     }
 }
 

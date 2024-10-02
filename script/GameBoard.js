@@ -1,3 +1,4 @@
+
 class GameBoard {
     rows; cols; elementId;
 
@@ -36,84 +37,78 @@ class GameBoard {
             } else {
                 this.turn = VALUE_O;
             }
-        } else if (this.turn) {
-            alert("Ô này đã đi rồi, hãy chọn lại!");
         }
     }
 
     check(x, y) {
         let cell = this.cells[x][y];
-        //Horizontal
-        let count = 1;
-        let i = 1;
-        while((y + i < this.cols) && this.cells[x][y + i].value ===  cell.value){
-            count++;
-            i++;
+        if (
+            this.checkDirection(x, y, 0, 1, cell.value) || // Horizontal
+            this.checkDirection(x, y, 1, 0, cell.value) || // Vertical
+            this.checkDirection(x, y, 1, 1, cell.value) || // Diagonal /
+            this.checkDirection(x, y, 1, -1, cell.value)   // Diagonal \
+        ) {
+            this.endGame();
         }
-        i = 1;
-        while((y - i >= 0) && this.cells[x][y - i].value ===  cell.value){
-            count++;
-            i++;
-        }
-        this.endGame(count);
-        //Vertical
-        count = 1;
-        i = 1;
-        while((x + i < this.rows) &&this.cells[x + i][y].value ===  cell.value){
-            count++;
-            i++;
-        }
-        i = 1;
-        while((x - i >= 0) &&this.cells[x - i][y].value ===  cell.value){
-            count++;
-            i++;
-        }
-        this.endGame(count);
-        //Left diagonal
-        count = 1;
-        i = 1;
-        let j = 1;
-        while((y + i < this.cols) && (x + i < this.rows) && this.cells[x + i][y + j].value ===  cell.value){
-            count++;
-            i++;
-            j++;
-        }
-        i = 1;
-        j = 1;
-        while((x - i >= 0) && (y - j >= 0) && this.cells[x - i][y - j].value ===  cell.value){
-            count++;
-            i++;
-            j++;
-        }
-        this.endGame(count);
-        //Right diagonal
-        count = 1;
-        i = 1;
-        j = 1;
-        while((y + j < this.cols) && (x - i >= 0) && this.cells[x - i][y + j].value ===  cell.value){
-            count++;
-            i++;
-            j++;
-        }
-        i = 1;
-        j = 1;
-        while((y - j >= 0) && (x + i < this.rows) && this.cells[x + i][y - j].value ===  cell.value){
-            count++;
-            i++;
-            j++;
-        }
-        this.endGame(count);
     }
 
-    endGame(count) {
-        if (count >= 5) {
-            this.isOver = true;
-            if (this.turn === VALUE_X) alert("X Thắng!");
-            else if (this.turn === VALUE_O) alert("O Thắng!");
+    checkDirection(x, y, dx, dy, value) {
+        let count = 0;
+
+        // Count in the positive direction
+        for (let i = 0; i < 5; i++) { // Check for up to 5 in a row
+            let newX = x + dx * i;
+            let newY = y + dy * i;
+            if (this.isValidCell(newX, newY) && this.cells[newX][newY].value === value) {
+                count++;
+            } else {
+                break;
+            }
         }
+
+        // Count in the negative direction
+        for (let i = 1; i < 5; i++) { // Check for up to 5 in a row
+            let newX = x - dx * i;
+            let newY = y - dy * i;
+            if (this.isValidCell(newX, newY) && this.cells[newX][newY].value === value) {
+                count++;
+            } else {
+                break;
+            }
+        }
+
+        // Win condition check
+        if (count >= 5) {
+            return true; // Win with 5 in a row
+        }
+        // else if (count === 4) {
+        //     // Check for blockages
+        //     let startBlocked = this.isValidCell(x - dx, y - dy) && this.cells[x - dx][y - dy].value !== "";
+        //     let endBlocked = this.isValidCell(x + dx * 4, y + dy * 4) && this.cells[x + dx * 4][y + dy * 4].value !== "";
+        //     return !startBlocked && !endBlocked; // Must be unblocked on both ends
+        // }
+
+        return false; // No win condition met
+    }
+
+
+    isValidCell(x, y) {
+        return x >= 0 && x < this.rows && y >= 0 && y < this.cols;
+    }
+
+    endGame() {
+        this.isOver = true;
+        if (this.turn === VALUE_X) this.announceWinner(`<span style="color: blue">X</span> Thắng!`);
+        else if (this.turn === VALUE_O) this.announceWinner(`<span style="color: red">O</span> Thắng!`);
+    }
+
+    announceWinner(result) {
+        let winner = document.getElementById("turn");
+        winner.innerHTML = result;
     }
 
     getPlayerTurn() {
         return this.turn;
     }
 }
+

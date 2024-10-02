@@ -1,4 +1,4 @@
-let VALUE_EMPTY = 1;
+let VALUE_EMPTY = "";
 let VALUE_X = 2;
 let VALUE_O = 3;
 let DEFAULT_COLS = 10;
@@ -32,9 +32,11 @@ class Cell {
         switch (this.value){
             case VALUE_X:
                 cellDiv.innerHTML = "X";
+                cellDiv.style.color = "blue";
                 break;
             case VALUE_O:
                 cellDiv.innerHTML = "O";
+                cellDiv.style.color = "red";
                 break;
             default:
                 cellDiv.innerHTML = "";
