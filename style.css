@@ -1,0 +1,48 @@
+#gameBoard {
+    position: relative;
+    margin-left: 33%;
+}
+
+.cell{
+    border: solid 1px black;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+}
+.cell:hover{
+    background-color: #e0dede;
+}
+
+.boardSize {
+    position: relative;
+    margin-left: 33%;
+    margin-bottom: 15px;
+    padding-left: 30px;
+}
+.boardSize button {
+    font-weight: bold;
+    text-align: center;
+    width: 70px;
+    height: 30px;
+}
+
+
+.tableFunction {
+    position: relative;
+    margin-left: 33%;
+    margin-bottom: 1px;
+    width: 401px;
+    display: flex;
+    justify-content: space-between;
+}
+span {
+    color: red;
+}
+.tableFunction button {
+    font-weight: bold;
+    text-align: center;
+    height: 30px;
+    width: 100px;
+    font-size: 90%;
+}
+

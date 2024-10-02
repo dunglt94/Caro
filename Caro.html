@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Cờ Caro</title>
+</head>
+<body onload="drawBoard()">
+<div class="theBigDiv">
+    <div class="boardSize" id="boardSize">Chọn size bàn cờ:
+        <button onclick="changeBoardSize(10, 10, 401)">10 x 10</button>
+        <button onclick="changeBoardSize(12, 12, 481)">12 x 12</button>
+        <button onclick="changeBoardSize(14, 14, 561)">14 x 14</button>
+    </div>
+    <div class="tableFunction" id="tableFunction">
+        <button onclick="drawBoard()">Dọn bàn cờ</button>
+        <button id="clock" onclick="gameStart()">PLAY!</button>
+        <button id="turn"></button>
+    </div>
+    <div id="gameBoard">
+    </div>
+</div>
+
+<script src="script/Cell.js"></script>
+<script src="script/GameBoard.js"></script>
+<script src="script/CountDown.js"></script>
+<script src="script/js.js"></script>
+</body>
+</html>
