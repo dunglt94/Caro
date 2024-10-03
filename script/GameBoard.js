@@ -9,6 +9,7 @@ class GameBoard {
         this.turn = VALUE_O;
         this.cells = [];
         this.isOver = false;
+        this.isPaused = false;
     }
 
     draw() {
@@ -26,7 +27,8 @@ class GameBoard {
     }
 
     play(x, y) {
-        if(this.isOver) return;
+        if (this.isOver) return;
+        if (this.isPaused) return;
         let cell = this.cells[x][y];
         if (cell.value === VALUE_EMPTY) {
             cell.value = this.turn;
@@ -81,13 +83,15 @@ class GameBoard {
         if (count >= 5) {
             return true; // Win with 5 in a row
         }
-        // else if (count === 4) {
-        //     // Check for blockages
-        //     let startBlocked = this.isValidCell(x - dx, y - dy) && this.cells[x - dx][y - dy].value !== "";
-        //     let endBlocked = this.isValidCell(x + dx * 4, y + dy * 4) && this.cells[x + dx * 4][y + dy * 4].value !== "";
-        //     return !startBlocked && !endBlocked; // Must be unblocked on both ends
-        // }
-
+        else if (count === 4) {
+            // Check for blockages
+            let startBlocked = this.isValidCell(x - dx, y - dy)
+                               && this.cells[x - dx][y - dy].value !== "";
+            let endBlocked = this.isValidCell(x + dx * 4, y + dy * 4)
+                               && this.cells[x + dx * 4][y + dy * 4].value !== "";
+            return !startBlocked && !endBlocked; // Must be unblocked on both ends
+        }
+        console.log(`Count for position (${x}, ${y}): ${count}`);
         return false; // No win condition met
     }
 

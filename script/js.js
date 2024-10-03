@@ -14,8 +14,14 @@ function gameStart() {
 }
 
 function pauseClock() {
-    if (clockCD.isRunning === true && caroBoard.isOver === false) clockCD.stop();
-    else if (clockCD.isRunning === false && caroBoard.isOver === false) clockCD.start();
+    if (clockCD.isRunning === true && caroBoard.isOver === false) {
+        clockCD.stop();
+        caroBoard.isPaused = true;
+    }
+    else if (clockCD.isRunning === false && caroBoard.isOver === false) {
+        clockCD.start();
+        caroBoard.isPaused = false;
+    }
 }
 
 // Đổi màu X và O
@@ -23,7 +29,7 @@ function playerColor(x, y) {
     let player = document.getElementById("turn");
     let color = document.getElementById(`cell-${x}-${y}`);
     let cellHTML = color.innerText;
-    if (caroBoard.isOver === false) {
+    if (caroBoard.isOver === false && caroBoard.isPaused === false) {
         if (caroBoard.getPlayerTurn() === 2 && cellHTML === "") {
             player.innerHTML = `Đến lượt <span style="color: red">O</span>`;
         } else if (caroBoard.getPlayerTurn() === 3 && cellHTML === "") {
