@@ -85,29 +85,27 @@ class GameBoard {
         }
         else if (count === 4) {
             // Check for blockages
-            if (this.cells[x][y].value === this.cells[x+dx][y+dy].value) {
-                let startBlocked1 = this.isValidCell(x - dx, y - dy)
-                    && this.cells[x - dx][y - dy].value !== "";
-                let endBlocked1 = this.isValidCell(x + dx * 4, y + dy * 4)
-                    && this.cells[x + dx * 4][y + dy * 4].value !== "";
+            if (this.isValidCell(x - dx, y - dy)
+                && this.isValidCell(x + dx * 4, y + dy * 4)
+                && this.cells[x][y].value === this.cells[x+dx][y+dy].value)
+            {
+                let startBlocked1 = this.cells[x - dx][y - dy].value !== "";
+                let endBlocked1 =  this.cells[x + dx * 4][y + dy * 4].value !== "";
                 console.log(`Checking blockages at count 4:`);
                 console.log(`Start coordinates: (${x - dx}, ${y - dy}), Blocked: ${startBlocked1}`);
                 console.log(`End coordinates: (${x + dx * 4}, ${y + dy * 4}), Blocked: ${endBlocked1}`)
-                return !startBlocked1 && !endBlocked1;
-            } else if (this.cells[x][y].value === this.cells[x-dx][y-dy].value) {
-                let startBlocked2 = this.isValidCell(x + dx, y + dy)
-                    && this.cells[x + dx][y + dy].value !== "";
-                let endBlocked2 = this.isValidCell(x + dx * 4, y + dy * 4)
-                    && this.cells[x - dx * 4][y - dy * 4].value !== "";
+                return !startBlocked1 && !endBlocked1; // Must be unblocked on both ends
+            } else if (this.isValidCell(x + dx, y + dy)
+                       && this.isValidCell(x - dx * 4, y - dy * 4)
+                       && this.cells[x][y].value === this.cells[x-dx][y-dy].value)
+            {
+                let startBlocked2 = this.cells[x + dx][y + dy].value !== "";
+                let endBlocked2 = this.cells[x - dx * 4][y - dy * 4].value !== "";
                 console.log(`Checking blockages at count 4:`);
                 console.log(`Start coordinates: (${x - dx * 4}, ${y - dy * 4}), Blocked: ${startBlocked2}`);
                 console.log(`End coordinates: (${x + dx}, ${y + dy}), Blocked: ${endBlocked2}`)
-                return !startBlocked2 && !endBlocked2;
+                return !startBlocked2 && !endBlocked2; // Must be unblocked on both ends
             }
-
-
-
-             // Must be unblocked on both ends
         }
         return false; // No win condition met
     }
