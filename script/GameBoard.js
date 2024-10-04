@@ -45,10 +45,10 @@ class GameBoard {
     check(x, y) {
         let cell = this.cells[x][y];
         if (
-            this.checkDirection(x, y, 0, 1, cell.value) || // Horizontal
-            this.checkDirection(x, y, 1, 0, cell.value) || // Vertical
-            this.checkDirection(x, y, 1, 1, cell.value) || // Diagonal /
-            this.checkDirection(x, y, 1, -1, cell.value)   // Diagonal \
+            this.checkDirection(x, y, 0, 1, cell.value) || // Horizontal —
+            this.checkDirection(x, y, 1, 0, cell.value) || // Vertical |
+            this.checkDirection(x, y, 1, 1, cell.value) || // Diagonal \
+            this.checkDirection(x, y, 1, -1, cell.value)   // Diagonal /
         ) {
             this.endGame();
         }
@@ -78,20 +78,37 @@ class GameBoard {
                 break;
             }
         }
-
+        console.log(`Count for position (${x}, ${y}): ${count}`);
         // Win condition check
         if (count >= 5) {
             return true; // Win with 5 in a row
         }
         else if (count === 4) {
             // Check for blockages
-            let startBlocked = this.isValidCell(x - dx, y - dy)
-                               && this.cells[x - dx][y - dy].value !== "";
-            let endBlocked = this.isValidCell(x + dx * 4, y + dy * 4)
-                               && this.cells[x + dx * 4][y + dy * 4].value !== "";
-            return !startBlocked && !endBlocked; // Must be unblocked on both ends
+            if (this.cells[x][y].value === this.cells[x+dx][y+dy].value) {
+                let startBlocked1 = this.isValidCell(x - dx, y - dy)
+                    && this.cells[x - dx][y - dy].value !== "";
+                let endBlocked1 = this.isValidCell(x + dx * 4, y + dy * 4)
+                    && this.cells[x + dx * 4][y + dy * 4].value !== "";
+                console.log(`Checking blockages at count 4:`);
+                console.log(`Start coordinates: (${x - dx}, ${y - dy}), Blocked: ${startBlocked1}`);
+                console.log(`End coordinates: (${x + dx * 4}, ${y + dy * 4}), Blocked: ${endBlocked1}`)
+                return !startBlocked1 && !endBlocked1;
+            } else if (this.cells[x][y].value === this.cells[x-dx][y-dy].value) {
+                let startBlocked2 = this.isValidCell(x + dx, y + dy)
+                    && this.cells[x + dx][y + dy].value !== "";
+                let endBlocked2 = this.isValidCell(x + dx * 4, y + dy * 4)
+                    && this.cells[x - dx * 4][y - dy * 4].value !== "";
+                console.log(`Checking blockages at count 4:`);
+                console.log(`Start coordinates: (${x - dx * 4}, ${y - dy * 4}), Blocked: ${startBlocked2}`);
+                console.log(`End coordinates: (${x + dx}, ${y + dy}), Blocked: ${endBlocked2}`)
+                return !startBlocked2 && !endBlocked2;
+            }
+
+
+
+             // Must be unblocked on both ends
         }
-        console.log(`Count for position (${x}, ${y}): ${count}`);
         return false; // No win condition met
     }
 

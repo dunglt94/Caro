@@ -1,3 +1,4 @@
+// Tạo bàn cờ
 let caroBoard;
 function drawBoard() {
     caroBoard= new GameBoard(DEFAULT_ROWS, DEFAULT_COLS, "gameBoard");
@@ -6,6 +7,7 @@ function drawBoard() {
     caroBoard.isOver = true;
 }
 
+// Bắt đầu ván cờ
 function gameStart() {
     drawBoard();
     caroBoard.isOver = false;
@@ -13,6 +15,7 @@ function gameStart() {
     clockCD.start();
 }
 
+// Tạm dừng và tiếp tục đồng hồ đếm ngược
 function pauseClock() {
     if (clockCD.isRunning === true && caroBoard.isOver === false) {
         clockCD.stop();
@@ -24,8 +27,8 @@ function pauseClock() {
     }
 }
 
-// Đổi màu X và O
-function playerColor(x, y) {
+// Hiển thị lượt người chơi
+function playerTurn(x, y) {
     let player = document.getElementById("turn");
     let color = document.getElementById(`cell-${x}-${y}`);
     let cellHTML = color.innerText;
@@ -38,8 +41,9 @@ function playerColor(x, y) {
     }
 }
 
+// Người chơi thực hiện lượt chơi của mình
 function play(x, y) {
-    playerColor(x, y);
+    playerTurn(x, y);
     caroBoard.play(x, y);
     if (caroBoard.isOver === true) clockCD.stop();
 }
@@ -61,7 +65,6 @@ function changeDivSize(width) {
         boardSizeDiv.style.padding = "0 0 0 110px";
     }
 }
-
 function changeBoardSize(rows, cols, width) {
     DEFAULT_ROWS = rows;
     DEFAULT_COLS = cols;
